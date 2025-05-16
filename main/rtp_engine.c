@@ -2136,7 +2136,7 @@ int ast_rtp_codecs_payload_code_tx_sample_rate(struct ast_rtp_codecs *codecs, in
 		ast_rwlock_unlock(&static_RTP_PT_lock);
 
 		ast_rwlock_rdlock(&codecs->codecs_lock);
-		if (payload >= 0 && payload < AST_VECTOR_SIZE(&codecs->payload_mapping_tx)){
+		if (payload >= 0 && payload < AST_VECTOR_SIZE(&codecs->payload_mapping_tx) && code != AST_RTP_CN){
 			type = AST_VECTOR_GET(&codecs->payload_mapping_tx, payload);
 			if (!type || (sample_rate != 0 && type->sample_rate != sample_rate)) {
 				/* Don't use the type if we can't find it or it doesn't match the supplied sample_rate */

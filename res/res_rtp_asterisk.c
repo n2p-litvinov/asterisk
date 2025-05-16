@@ -9421,6 +9421,11 @@ static int ast_rtp_sendcng(struct ast_rtp_instance *instance, int level)
 
 	payload = ast_rtp_codecs_payload_code_tx(ast_rtp_instance_get_codecs(instance), 0, NULL, AST_RTP_CN);
 
+	if (payload < 0) {
+		ast_log(LOG_ERROR, "Don't know how to send comfort noise packet, unknown payload\n");
+		return -1;
+	}
+
 	level = 127 - (level & 0x7f);
 
 	rtp->dtmfmute = ast_tvadd(ast_tvnow(), ast_tv(0, 500000));
